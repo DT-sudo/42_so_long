@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dt <dt@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/03 16:49:34 by dtereshc          #+#    #+#             */
-/*   Updated: 2025/07/11 15:40:04 by dt               ###   ########.fr       */
+/*   Created: 2025/07/05 17:15:09 by dt                #+#    #+#             */
+/*   Updated: 2025/07/05 17:15:09 by dt               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
 
-int	main(int argc, char **argv)
+#include "so_long.h"
+
+void	ft_putchar_fd(char c, int fd)
 {
-	t_game_map game;
-	
-	validate_arguments(argv, argc);
-	game.map = creat_map(argv[1]);
-	return (0);
+	write(fd, &c, 1);
 }

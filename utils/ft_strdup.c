@@ -1,22 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dt <dt@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/03 16:49:34 by dtereshc          #+#    #+#             */
-/*   Updated: 2025/07/11 15:40:04 by dt               ###   ########.fr       */
+/*   Created: 2024/10/03 16:43:51 by olcherno          #+#    #+#             */
+/*   Updated: 2025/07/11 16:51:27 by dt               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "so_long.h"
 
-int	main(int argc, char **argv)
+char	*ft_strdup(const char *s)
 {
-	t_game_map game;
-	
-	validate_arguments(argv, argc);
-	game.map = creat_map(argv[1]);
-	return (0);
+	size_t	len;
+	char	*ns;
+	size_t	i;
+
+	if (s == NULL)
+		return (NULL);
+	len = ft_strlen(s);
+	ns = (char *)malloc((sizeof(char) * (len + 1)));
+	if (ns == NULL)
+		return (NULL);
+	i = 0;
+	while (len--)
+	{
+		ns[i] = s[i];
+		i++;
+	}
+	ns[i] = '\0';
+	return (ns);
 }

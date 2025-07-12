@@ -1,22 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dt <dt@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/03 16:49:34 by dtereshc          #+#    #+#             */
-/*   Updated: 2025/07/11 15:40:04 by dt               ###   ########.fr       */
+/*   Created: 2025/07/11 19:30:05 by dt                #+#    #+#             */
+/*   Updated: 2025/07/12 15:21:15 by dt               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "so_long.h"
 
-int	main(int argc, char **argv)
+void free_map(char **map)
 {
-	t_game_map game;
-	
-	validate_arguments(argv, argc);
-	game.map = creat_map(argv[1]);
-	return (0);
+    char **tmp;
+    
+    tmp = map;
+    while(*tmp)
+        free(*tmp++);
+    free(map);
 }
+
+void	drop_error_ext(int error_num, char *error_message, char **map)
+{
+	if (map)
+		free_map(map);
+	perror(error_message);
+	exit(error_num);
+}
+
