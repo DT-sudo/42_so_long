@@ -6,12 +6,11 @@
 /*   By: dt <dt@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:15:01 by dt                #+#    #+#             */
-/*   Updated: 2025/07/05 17:15:02 by dt               ###   ########.fr       */
+/*   Updated: 2025/07/14 17:23:27 by dt               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "so_long.h"
+#include "../includes/so_long.h"
 
 int	ft_num_len(unsigned	int num)
 {

@@ -6,11 +6,11 @@
 /*   By: dt <dt@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 16:43:51 by olcherno          #+#    #+#             */
-/*   Updated: 2025/07/11 16:51:27 by dt               ###   ########.fr       */
+/*   Updated: 2025/07/14 17:23:38 by dt               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../includes/so_long.h"
 
 char	*ft_strdup(const char *s)
 {

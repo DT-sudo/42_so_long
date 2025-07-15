@@ -6,11 +6,11 @@
 /*   By: dt <dt@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:14:27 by dt                #+#    #+#             */
-/*   Updated: 2025/07/05 17:14:40 by dt               ###   ########.fr       */
+/*   Updated: 2025/07/14 17:23:08 by dt               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../includes/so_long.h"
 
 static void	ft_isneg(int *n, int *neg, int *tmp)
 {

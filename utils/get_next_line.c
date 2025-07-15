@@ -6,11 +6,11 @@
 /*   By: dt <dt@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:15:21 by dt                #+#    #+#             */
-/*   Updated: 2025/07/11 17:16:16 by dt               ###   ########.fr       */
+/*   Updated: 2025/07/14 19:04:54 by dt               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../includes/so_long.h"
 
 char	*ft_free(char *buffer, char *buf)
 {
@@ -38,7 +38,6 @@ char	*ft_next(char *buffer)
 	line = ft_calloc((ft_strlen(buffer) - i + 1), sizeof(char));
 	i++;
 	j = 0;
-	// line == buffer
 	while (buffer[i])
 		line[j++] = buffer[i++];
 	free(buffer);
@@ -82,6 +81,7 @@ char	*read_file(int fd, char *res)
 		if (byte_read == -1)
 		{
 			free(buffer);
+			free(res);  
 			return (NULL);
 		}
 		buffer[byte_read] = 0;
@@ -98,7 +98,7 @@ char	*get_next_line(int fd)
 	static char	*buffer;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0) // ??read(fd, 0, 0) < 0)??
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = read_file(fd, buffer);
 	if (!buffer)

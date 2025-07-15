@@ -6,12 +6,11 @@
 /*   By: dt <dt@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:15:09 by dt                #+#    #+#             */
-/*   Updated: 2025/07/05 17:15:09 by dt               ###   ########.fr       */
+/*   Updated: 2025/07/14 17:23:34 by dt               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "so_long.h"
+#include "../includes/so_long.h"
 
 void	ft_putchar_fd(char c, int fd)
 {

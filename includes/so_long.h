@@ -6,7 +6,7 @@
 /*   By: dt <dt@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 16:48:24 by dtereshc          #+#    #+#             */
-/*   Updated: 2025/07/12 19:09:16 by dt               ###   ########.fr       */
+/*   Updated: 2025/07/15 15:28:08 by dt               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,91 +17,132 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <math.h>
+# include <signal.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 # include <unistd.h>
 
-size_t		BUFFER_SIZE = 100;
-
-int			FD_FAIL = 3;
-int			INVALID_MAP = 4;
-int			MAP_ALLOC_FAIL = 5;
-int			INVALID_POINTER = 6;
-int			INVALID_MAP_NAME = 7;
+# define BUFFER_SIZE 100
+# define FD_FAIL 3
+# define INVALID_MAP 4
+# define INVALID_INPUT 5
+# define MAP_ALLOC_FAIL 6
+# define INVALID_POINTER 7
+# define INVALID_MAP_NAME 8
 
 typedef struct s_game_map
 {
-	char	**map;
-	size_t	x;
-	size_t	y;
-	int		p;
-	int		e;
-	int		c;
-	// int 	step;
-	// int point;
-	// int	start[2];
-	// int	exit[2];
-}			t_game_map;
+	char		**map;
+	const char	*map_name;
+	size_t		map_height;
+	size_t		map_width;
+	int			p;
+	int			e;
+	int			c;
+	int			e_cordinates[2];
+	int			p_cordinates[2];
+	int			step;
+}				t_game_map;
 
 typedef struct s_game_mlx
 {
-	void	*mlx;
-	void 	*mlx_win;
-	void	*img[6]; //?
-	int		point; //?
+	void		*mlx;
+	void		*mlx_win;
+	void		*img[6];
+	int			point;
 }				t_game_mlx;
 
 // so_long funcs
+// collectibles_exit.c
+void			reach_every_E_C(t_game_map *game, size_t x, size_t y);
+void			find_E_C_P_restore(t_game_map *game);
+void			collectibles_exit(t_game_map *game);
+void			set_P_cordinates(t_game_map *game);
+
 // start_game_validation.c
-void		validation_map_name(const char *map_name);
-void		validate_arguments(int argc, char **argv);
-int			catch_nl(char *buf, size_t size);
-int			count_map_rows(const char *map_name);
+void			validation_map_name(const char *map_name);
+void			validate_arguments(int argc, char **argv);
 
 // creat_map.c
-char		**malloc_map(int rows_qnt);
-char		*get_map_row(int fd, char **map);
-bool		add_rows(const char *map_name, char **map, int rows_qnt);
-char		**creat_map(const char *map_name);
+bool			add_rows(t_game_map *game, int rows_qnt);
+int				count_map_rows(const char *map_name);
+char			*get_row(int fd, char **map);
+char			**creat_map(t_game_map *game);
+char			**malloc_map(int lines);
 
 // validate_map.c
-void	validate_map_walls(char **map, const char *map_name); // extend parapetrs on 1 (rows_qnt)
+void			count_tiles(t_game_map *game, char tile_sign, size_t x,
+					size_t y);
+void			validate_map_walls(t_game_map *game);
+void			validate_e_p_c_qnt(t_game_map *game);
+void			validate_map(t_game_map *game);
+void			check_tiles(t_game_map *game);
 
 // utils.c
-void		free_map(char **map);
-void		drop_error_ext(int error_num, char *error_message, char **map);
+void			drop_error_ext(int error_num, char *error_message, char **map);
+int				catch_nl(char *buf, size_t size);
+void			free_map(char **map);
 
 // UTILS //
-char		*ft_itoa(int n);
-char		*ft_strdup(const char *s);
-int			ft_print_hex(unsigned int num, const char format);
-int			ft_print_ptr(unsigned long long ptr);
-int			ft_print_unsigned(unsigned int n);
+int				ft_print_hex(unsigned int num, const char format);
+int				ft_print_ptr(unsigned long long ptr);
+int				ft_print_unsigned(unsigned int n);
+char			*ft_strdup(const char *s);
+char			*ft_itoa(int n);
 
 // ft_printf utils
-void		ft_putstr(char *str);
-int			ft_printstr(char *str);
-int			ft_printnbr(int n);
-int			ft_printpercent(void);
+int				ft_printstr(char *str);
+int				ft_printpercent(void);
+void			ft_putstr(char *str);
+int				ft_printnbr(int n);
 
-// libft
-void		ft_putchar_fd(char c, int fd);
-char		*ft_strdup(const char *s);
-size_t		ft_strlen(const char *str);
-char		*ft_strrchr(const char *s, int c);
+// LIBFT
+char			*ft_strrchr(const char *s, int c);
+void			ft_putchar_fd(char c, int fd);
+size_t			ft_strlen(const char *str);
+char			*ft_strdup(const char *s);
+int				ft_strcmp(const char *s1, const char *s2);
+
+// ft_itoa.c
+// static void		ft_isneg(int *n, int *neg, int *tmp);
+// static void		ft_itoa_write(char *str, int len, int n, int tmp);
+// static int		ft_itoa_len(int n);
+char			*ft_itoa(int n);
+
+// ft_print_hex.c
+int				ft_hex_len(unsigned int num);
+void			ft_put_hex(unsigned int num, const char format);
+int				ft_print_hex(unsigned int num, const char format);
+
+// ft_print_ptr.c
+int				ft_ptr_len(uintptr_t num);
+void			ft_put_ptr(uintptr_t num);
+int				ft_print_ptr(unsigned long long ptr);
+
+// ft_print_unsigned.c
+int				ft_num_len(unsigned int num);
+char			*ft_uitoa(unsigned int n);
+int				ft_print_unsigned(unsigned int n);
+
+// ft_printf_utils.c
+void			ft_putstr(char *str);
+int				ft_printstr(char *str);
+int				ft_printnbr(int n);
+int				ft_printpercent(void);
 
 // get_next_line utils
-char		*ft_strjoin(char const *s1, char const *s2);
-char		*ft_strchr(const char *string, int searchedChar);
-void		ft_bzero(void *s, size_t n);
-void		*ft_calloc(size_t elementCount, size_t elementSize);
+void			*ft_calloc(size_t elementCount, size_t elementSize);
+char			*ft_strchr(const char *string, int searchedChar);
+char			*ft_strjoin(char const *s1, char const *s2);
+void			ft_bzero(void *s, size_t n);
 
 //  get_next_line
-char		*ft_free(char *buffer, char *buf);
-char		*ft_next(char *buffer);
-char		*ft_line(char *buffer);
-char		*read_file(int fd, char *res);
-char		*get_next_line(int fd);
+char			*ft_free(char *buffer, char *buf);
+char			*read_file(int fd, char *res);
+char			*ft_next(char *buffer);
+char			*ft_line(char *buffer);
+char			*get_next_line(int fd);
 
 #endif

@@ -6,12 +6,11 @@
 /*   By: dt <dt@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:15:16 by dt                #+#    #+#             */
-/*   Updated: 2025/07/11 16:57:26 by dt               ###   ########.fr       */
+/*   Updated: 2025/07/14 17:23:47 by dt               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "so_long.h"
+#include "../includes/so_long.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
@@ -77,14 +76,4 @@ void	*ft_calloc(size_t elementCount, size_t elementSize)
 		return (NULL);
 	ft_bzero(res, elementSize * elementCount);
 	return (res);
-}
-
-size_t	ft_strlen(const char *theString)
-{
-	int	i;
-
-	i = 0;
-	while (theString[i])
-		i++;
-	return (i);
 }
