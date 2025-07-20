@@ -6,7 +6,7 @@
 /*   By: dt <dt@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:39:40 by dt                #+#    #+#             */
-/*   Updated: 2025/07/15 16:46:00 by dt               ###   ########.fr       */
+/*   Updated: 2025/07/19 17:52:07 by dt               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*get_row(int fd, char **map)
 		drop_error_ext(FD_FAIL, "Error: File descriptor is not valid.\n", map);
 	row = get_next_line(fd);
 	if (!row)
-		return NULL;
+		return (NULL);
 	row_len = ft_strlen(row);
 	if (row_len > 0 && row[row_len - 1] == '\n')
 		row[row_len - 1] = '\0';
@@ -52,7 +52,8 @@ bool	add_rows(t_game_map *game, int rows_qnt)
 	r = 0;
 	fd = open(game->map_name, O_RDONLY);
 	if (fd < 0)
-		drop_error_ext(FD_FAIL, "Error: File descriptor is not valid.\n", game->map);
+		drop_error_ext(FD_FAIL, "Error: File descriptor is not valid.\n",
+			game->map);
 	while (r < rows_qnt)
 	{
 		row = get_row(fd, game->map);
@@ -63,7 +64,8 @@ bool	add_rows(t_game_map *game, int rows_qnt)
 	game->map[r] = NULL;
 	close(fd);
 	if (r != rows_qnt)
-		drop_error_ext(INVALID_MAP, "Error: Map has inconsistent row count.\n", game->map);
+		drop_error_ext(INVALID_MAP, "Error: Map has inconsistent row count.\n",
+			game->map);
 	return (true);
 }
 

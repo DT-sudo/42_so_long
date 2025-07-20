@@ -6,7 +6,7 @@
 /*   By: dt <dt@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:44:27 by dtereshc          #+#    #+#             */
-/*   Updated: 2025/07/15 10:12:37 by dt               ###   ########.fr       */
+/*   Updated: 2025/07/19 16:08:13 by dt               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	reach_every_E_C(t_game_map *game, size_t x, size_t y)
 			return ;
 		}
 		else if (game->map[x][y] == 'p' || game->map[x][y] == 'e'
-			|| game->map[x][y] == 'o' ||game->map[x][y] == 'c' || game->map[x][y] == '1')
+			|| game->map[x][y] == 'o' || game->map[x][y] == 'c'
+			|| game->map[x][y] == '1')
 			return ;
 		reach_every_E_C(game, x + 1, y);
 		reach_every_E_C(game, x, y + 1);
@@ -64,21 +65,22 @@ void	find_E_C_P_restore(t_game_map *game)
 				drop_error_ext(INVALID_MAP,
 					"Error: E or some C are not reachable.\n", game->map);
 			}
-			else if (game->map[x][y] == 'e' || game->map[x][y] == 'c' || game->map[x][y] == 'p')
-					game->map[x][y] = game->map[x][y] - 32;
+			else if (game->map[x][y] == 'e' || game->map[x][y] == 'c'
+				|| game->map[x][y] == 'p')
+				game->map[x][y] = game->map[x][y] - 32;
 			else if (game->map[x][y] == 'o')
-					game->map[x][y] = '0';
+				game->map[x][y] = '0';
 			y++;
 		}
 		x++;
 	}
 }
 
-void set_P_cordinates(t_game_map *game)
+void	set_P_cordinates(t_game_map *game)
 {
-	size_t x;
-	size_t y;
-	
+	size_t	x;
+	size_t	y;
+
 	x = 0;
 	while (game->map[x])
 	{
@@ -89,7 +91,7 @@ void set_P_cordinates(t_game_map *game)
 			{
 				game->p_cordinates[0] = x;
 				game->p_cordinates[1] = y;
-				return;
+				return ;
 			}
 			y++;
 		}
@@ -99,26 +101,6 @@ void set_P_cordinates(t_game_map *game)
 void	collectibles_exit(t_game_map *game)
 {
 	set_P_cordinates(game);
-
 	reach_every_E_C(game, game->p_cordinates[0], game->p_cordinates[1]);
-
 	find_E_C_P_restore(game);
 }
-
-
-// size_t x;
-// size_t y;
-// x = 0;
-// while (game->map[x])
-// {
-// 	y = 0;
-// 	while (game->map[x][y])
-// 	{
-// 		printf("%c", game->map[x][y]);	
-// 		y++;
-// 	}
-// 	printf("\n");
-// 	x++;
-// }
-// printf("\n");
-	

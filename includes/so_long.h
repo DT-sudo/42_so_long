@@ -6,7 +6,7 @@
 /*   By: dt <dt@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 16:48:24 by dtereshc          #+#    #+#             */
-/*   Updated: 2025/07/15 15:28:08 by dt               ###   ########.fr       */
+/*   Updated: 2025/07/19 17:47:36 by dt               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define MAP_ALLOC_FAIL 6
 # define INVALID_POINTER 7
 # define INVALID_MAP_NAME 8
+# define TILE_SIZE 64
 
 typedef struct s_game_map
 {
@@ -49,9 +50,8 @@ typedef struct s_game_map
 typedef struct s_game_mlx
 {
 	void		*mlx;
-	void		*mlx_win;
-	void		*img[6];
-	int			point;
+	void		*win;
+	void		*tile[5];
 }				t_game_mlx;
 
 // so_long funcs
@@ -84,6 +84,23 @@ void			check_tiles(t_game_map *game);
 void			drop_error_ext(int error_num, char *error_message, char **map);
 int				catch_nl(char *buf, size_t size);
 void			free_map(char **map);
+
+// move.c
+int				move_kyes(int k_num, t_game_map *game, t_game_mlx *data);
+void			make_map_logic(t_game_map *game, t_game_mlx *data, size_t x,
+					size_t y);
+void			make_map(t_game_map *game, t_game_mlx *data);
+void			move(t_game_map *game, t_game_mlx *data, size_t next_x,
+					size_t next_y);
+void			update_p_cordinates(t_game_map *game, size_t new_p_x,
+					size_t new_p_y);
+
+// creat_win.c
+void			clean_mlx(t_game_mlx *data, t_game_map *map);
+void			clean_imgs(t_game_mlx *data);
+void			set_imgs(t_game_map *game, t_game_mlx *data);
+void			esc(t_game_mlx *data, t_game_map map);
+void			init_func(t_game_map *game, t_game_mlx *data);
 
 // UTILS //
 int				ft_print_hex(unsigned int num, const char format);
